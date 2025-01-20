@@ -1,26 +1,38 @@
-public class pieza
+package chess;
+
+public abstract class pieza {
+	 boolean pcolor;
+	public pieza(boolean color)
 	{
-		static int pcolor;
-		static boolean pactivo;
-		public pieza(int color,boolean activo)
-		{
-			String figura=" ";
-			pcolor=color;
-			pactivo=activo;
-		}
-		public static boolean movimiento(int a,int b,int c,int d)
-		{
-			
-			return false;
-			
-		}
-		public int getcolor()
-		{
-			return pcolor;
-		}
-		public boolean getactivo()
-		{
-			return pactivo;
-		}
+		pcolor=color;
+	}
+	public boolean getcolor()
+	{
+		return pcolor;
+	}
+	public boolean movimiento(int a,int b,int c,int d,tablero tablero)
+	{
+		return false;
+	}
+	public boolean getimportante()
+	{
+		return false;
+	}	
+	public boolean getennpasant()
+	{
+		return false;
+	}
+	public boolean getcoronation()
+	{
+		return false;
+	}
+	public void setennpasant(boolean a)
+	{
 		
 	}
+	public boolean amenaza(boolean a)
+	{
+		return false;
+	}
+
+}
