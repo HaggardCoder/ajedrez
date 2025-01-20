@@ -1,47 +1,38 @@
-public class caballo extends pieza
+package chess;
 
-{
-	public caballo(int color,boolean activo)
-	{
-		super(color,activo);
-		if(color==0)
-		{
-			String figura="c";
-		}
-		else
-		{
-			String figura="C";
-		}
+public class caballo extends pieza {
+
+	public caballo(boolean color) {
+		super(color);
+		// TODO Auto-generated constructor stub
 	}
-	public static boolean movimiento(pieza[][] tablero, int a,int b,int c,int d,int turn)
+	public boolean movimiento(int a,int b,int c,int d,tablero tablero)
 	{
-		int e=0;
-		if(tablero[a][b].getcolor()==turn)
-		{
-			if(tablero[a][b].getcolor()==tablero[c][d].getcolor())
-			{
-				return false;					
-			}
-			else
-			{
-				if(tablero[c][d]==tablero[a+2][b-1]||tablero[c][d]==tablero[a+2][b+1]||tablero[c][d]==tablero[a-2][b+1]||tablero[c][d]==tablero[a+2][b-1]||tablero[c][d]==tablero[a+1][b+2]||tablero[c][d]==tablero[a-1][b+2]||tablero[c][d]==tablero[a+1][b-2]||tablero[c][d]==tablero[a-1][b-2])
-				{
-					tablero[c][d]=tablero[a][b];
-					return true;
-				}
-				else
-				{
-					return false;
-				}
-			}
-			
-		}
-		else
-		{
-			return false;				
-		}
-		
-		
+	 if((a==c-1||a==c+1)&&b==d+2)
+	 {
+		 tablero.setpieza(tablero.getpieza(a, b), c, d);
+			tablero.removepieza(a, b);
+			return true;
+	 }
+	 if((a==c-1||a==c+1)&&b==d-2)
+	 {
+		 tablero.setpieza(tablero.getpieza(a, b), c, d);
+			tablero.removepieza(a, b);
+			return true;
+	 }
+	 if((b==d+1||b==d-1)&&a==c+2)
+	 {
+		 tablero.setpieza(tablero.getpieza(a, b), c, d);
+			tablero.removepieza(a, b);
+			return true;
+	 }
+	 if((b==d+1||b==d-1)&&a==c-2)
+	 {
+		 tablero.setpieza(tablero.getpieza(a, b), c, d);
+			tablero.removepieza(a, b);
+			return true;
+	 }
+	  return false;
 	}
-	
+
 }
