@@ -1,109 +1,92 @@
-public class alfil extends pieza
-{
-	public alfil(int color,boolean activo)
-	{
-		super(color,activo);
-		if(color==0)
-		{
-			String figura="a";
-		}
-		else
-		{
-			String figura="A";
-		}
+package chess;
+
+public class alfil extends pieza{
+
+	public alfil(boolean color) {
+		super(color);
+		// TODO Auto-generated constructor stub
 	}
-	public static boolean movimiento(pieza[][] tablero, int a,int b,int c,int d,int turn)
+	public boolean movimiento( int a,int b,int c,int d,tablero tablero)
 	{
-		int e=0,x=0;
-		boolean si=false;
-		if(tablero[a][b].getcolor()==turn)
+		int e,f=d;
+		if(a>c&&b>d)
+		for(e=a+1;e<=7;e++)
 		{
-			if(tablero[a][b].getcolor()==tablero[c][d].getcolor())
-			{
-				return false;				
-			}
-			else
-			{
-				
-				e=a;
-				x=b;
-				while(e>=0 && e<=7&& x>=0&&x<=0)
-				{
-					e++;
-					x++;
-					if(e==c&&x==b)
-					{
-						return true;
-						
-					}
-					if(tablero[e][x].getactivo())
-					{
-						break;
-					}
-				}
-				e=a;
-				x=b;
-				while(e>=0 && e<=7&& x>=0&&x<=0)
-				{
-					e++;
-					x--;
-					if(e==c&&x==b)
-					{
-						return true;
-						
-					}
-					if(tablero[e][x].getactivo())
-					{
-						break;
-					}
-				}
-				e=a;
-				x=b;
-				while(e>=0 && e<=7&& x>=0&&x<=0)
-				{
-					e--;
-					x++;
-					if(e==c&&x==b)
-					{
-						return true;
-						
-					}
-					if(tablero[e][x].getactivo())
-					{
-						break;
-					}
-				}
-				e=a;
-				x=b;
-				while(e>=0 && e<=7&& x>=0&&x<=0)
-				{
-					e--;
-					x--;
-					if(e==c&&x==b)
-					{
-						return true;
-						
-					}
-					if(tablero[e][x].getactivo())
-					{
-						break;
-					}
-				}
+			f++;
+			if(f>=7)
 				return false;
-					
-					
-				}
-				
-							
+			if(c==e&&f==d)
+			{
+				tablero.setpieza(tablero.getpieza(a, b), c, d);
+				tablero.removepieza(a, b);
+				return true;
 			}
-		else
-		{
-			return false;
+			else if(tablero.getpieza(e, f)!=null)
+			{
+				return false;							
+			}
 		}
-			
-			
 		
-		
+		if(a>c&&b<d)
+		for(e=a+1;e<=7;e++)
+		{
+			f--;
+			if(f<=0)
+				return false;
+			if(c==e&&f==d)
+			{
+				tablero.setpieza(tablero.getpieza(a, b), c, d);
+				tablero.removepieza(a, b);
+				return true;
+			}
+			else if(tablero.getpieza(e, f)!=null)
+			{
+				return false;							
+			}
+		}
+		if(a<c&&b<d)
+		for(e=a+1;e<=0;e--)
+		{
+			f--;
+			if(f<=0)
+				return false;
+			if(c==e&&f==d)
+			{
+				tablero.setpieza(tablero.getpieza(a, b), c, d);
+				tablero.removepieza(a, b);
+				return true;
+			}
+			else if(tablero.getpieza(e, f)!=null)
+			{
+				return false;
+												
+			}
+		}
+		if(a<c&&b>d)
+		for(e=a+1;e<=0;e--)
+		{
+			f++;
+			if(f>=7)
+				break;
+			if(c==e&&f==d)
+			{
+				tablero.setpieza(tablero.getpieza(a, b), c, d);
+				tablero.removepieza(a, b);
+				return true;
+			}
+			else if(tablero.getpieza(e, f)!=null)
+			{
+				return false;
+				
+				
+			}
+		}
+		return false;			
 	}
-	
+			
+			
+		
+		
+
 }
+
