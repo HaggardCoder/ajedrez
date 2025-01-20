@@ -1,126 +1,191 @@
-import java.util.Scanner;
+package chess;
 
-public class peon extends pieza
+public class peon extends pieza{
+	boolean ennpasant;
+	boolean coronation;
 
-{
-	public peon(int color,boolean activo)
-	{
-		super(color,activo);
-		if(color==0)
-		{
-			String figura="p";
-		}
-		else
-		{
-			String figura="P";
-		}
+	public peon(boolean color) {
+		super(color);
+		ennpasant=false;
+		coronation=false;
+		
+		
 	}
-	public static boolean movimiento(pieza[][] tablero,int a,int b,int c,int d,int turn)
-	{Scanner scan=new Scanner(System.in);
-		int e=0,x=0,color;
-		if(tablero[a][b].getcolor()==turn)
+	public void setennpasant(boolean a)
+	{
+		ennpasant=a;
+	}
+	public boolean getennpasant()
+	{
+		return ennpasant;
+	}
+	public void setcoronation(boolean a)
+	{
+		coronation=a;
+	}
+	public boolean getcoronation()
+	{
+		return coronation;
+	}
+	public boolean movimiento(int a,int b,int c,int d,tablero tablero)
+	{
+		if(pcolor)
 		{
-			if(tablero[a][b].getcolor()==tablero[c][d].getcolor())
+			if(b==d&&a-2==c&&a==6)
 			{
-				return false;					
-			}
-			else
-			{
-				color=tablero[a][b].getcolor();
-				if(color==0)
+				if(tablero.getpieza(a-1, b)==null||tablero.getpieza(a-2, b)==null)
 				{
-					if(a+1==c&&b==d)
-					{
-						if(tablero[c][d].getactivo())
-						{
-							return false;
-							
-						}
-						else
-						{
-							if(c==7)
-							{
-								
-								int nuevapieza=scan.nextInt();
-								switch(nuevapieza)
-								{
-								case 1:
-									tablero[c][d]=new caballo(color,true);
-								    return true;
-								case 2:
-									tablero[c][d]=new alfil(color,true);
-									return true;
-									
-								case 3:
-									tablero[c][d]=new torre(color,true);
-									return true;
-									
-								case 4:
-									tablero[c][d]=new reina(color,true);
-									return true;
-									
-									
-								}
-							}
-							tablero[c][d]=tablero[a][b];
-							return true;
-						}
-						
-					}
-					if(a+1==c&&(b-1==d||b+1==d))
-					{
-						if(c==7)
-						{
-							
-							int nuevapieza=scan.nextInt();
-							switch(nuevapieza)
-							{
-							case 1:
-								tablero[c][d]=new caballo(color,true);
-							    return true;
-							case 2:
-								tablero[c][d]=new alfil(color,true);
-								return true;
-								
-							case 3:
-								tablero[c][d]=new torre(color,true);
-								return true;
-								
-							case 4:
-								tablero[c][d]=new reina(color,true);
-								return true;
-								
-								
-							}
-						}
-						tablero[c][d]=tablero[a][b];
-						return true;
-					}
-					if(a==1&&c==a+2)
-					{
-						if(tablero[c][d].getactivo()==false&&tablero[c-1][d].getactivo()==false)
-						{
-							
-							tablero[c][d]=tablero[a][b];
-							return true;
-						}
-						
-					}
+					return false;
 				}
-				
+				else
+				{
+					
+					ennpasant=true;
+					tablero.setpieza(tablero.getpieza(a, b), c, d);
+					tablero.removepieza(a, b);
+					return true;
+				}
+			}
+			if((b-1==d||b+1==d)&&a-1==c)
+			{
+				if(tablero.getpieza(c, d)==null||tablero.getpieza(a, b-1).getennpasant()==false||tablero.getpieza(a, b+1).getennpasant()==false)
+				{
+					return false;
+				}
+				else
+				{
+					if(c==0)
+					{
+						coronation=true;
+					}
+					tablero.setpieza(tablero.getpieza(a, b), c, d);
+					tablero.removepieza(a, b);
+					return true;
+				}
+			}
+			if(b==d&&a-1==c)
+			{
+				if(tablero.getpieza(a+1, b)==null)
+				{
+					return false;
+				}
+				else
+				{					
+					if(c==0)
+					{
+						coronation=true;
+					}
+					tablero.setpieza(tablero.getpieza(a, b), c, d);
+					tablero.removepieza(a, b);
+					return true;
+				}
 			}
 			
 		}
 		else
 		{
-			return false;				
+			if(b==d&&a+2==c)
+			{
+				if(tablero.getpieza(a+1, b)==null||tablero.getpieza(a+2, b)==null)
+				{
+					return false;
+				}
+				else
+				{
+					
+					ennpasant=true;
+					tablero.setpieza(tablero.getpieza(a, b), c, d);
+					tablero.removepieza(a, b);
+					return true;
+				}
+			}
+			if((b-1==d||b+1==d)&&a+1==c)
+			{
+				if(tablero.getpieza(c, d)==null||tablero.getpieza(a, b-1).getennpasant()==false||tablero.getpieza(a, b+1).getennpasant()==false)
+				{
+					return false;
+				}
+				else
+				{
+					if(c==7)
+					{
+						coronation=true;
+					}
+					tablero.setpieza(tablero.getpieza(a, b), c, d);
+					tablero.removepieza(a, b);
+					return true;
+				}
+			}
+			if(b==d&&a+1==c)
+			{
+				if(tablero.getpieza(a+1, b)==null)
+				{
+					return false;
+				}
+				else
+				{					
+					if(c==7)
+					{
+						coronation=true;
+					}
+					tablero.removepieza(a, b);
+					return true;
+				}
+			}
 		}
+			
 		return false;
-		
-		
 		
 	}
 	
+	public boolean movimientos(tablero tablero,int a,int b,boolean turn)
+	{
+		if(tablero.getpieza(a, b).getcolor())
+		{
+			if(tablero.getpieza(a-1, b)==null)
+			{
+				tablero.setpieza(tablero.getpieza(a, b), a-1, b);
+				tablero.setpieza(null, a, b);
+				if(tablero.encuetrarey(turn).amenaza(turn))
+				{
+					tablero.setpieza(tablero.getpieza(a-1, b), a, b);
+					tablero.setpieza(null, a-1, b);
+					
+				}
+				else
+				{
+					tablero.setpieza(tablero.getpieza(a-1, b), a, b);
+					tablero.setpieza(null, a-1, b);
+					return true;
+				}
+			}
+			
+	
+		
+		}
+	
+		
+		if(tablero.getpieza(a-1, b)==null&&tablero.getpieza(a-2, b)==null&&a==6)
+		{
+			tablero.setpieza(tablero.getpieza(a, b), a-2, b);
+			tablero.setpieza(null, a, b);
+			if(tablero.encuetrarey(turn).amenaza(turn))
+			{
+				tablero.setpieza(tablero.getpieza(a-1, b), a, b);
+				tablero.setpieza(null, a-2, b);
+				
+			}
+			else
+			{
+				tablero.setpieza(tablero.getpieza(a-1, b), a, b);
+				tablero.setpieza(null, a-2, b);
+				return true;
+			}
+		}
+		if(tablero)
+		return false;
+	}
 }
+
 	
 
